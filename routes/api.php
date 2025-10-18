@@ -13,13 +13,17 @@ use App\Http\Controllers\{
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
-Route::post('/cadastrar', [UserController::class, 'create']);
+Route::post('/cadastrar', [UserController::class, 'create'])->middleware('admin');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
 
     Route::prefix('user')->group(function() {
         Route::get('/', [UserController::class, 'index']);
+        Route::get('/{id}', [UserController::class, 'show']);
+        Route::post('/', [UserController::class, 'create'])->middleware('admin');
+        Route::put('/{id}', [UserController::class, 'update']);
+        Route::delete('/{id}', [UserController::class, 'delete']);
     });
 
     Route::prefix('estado')->group(function () {
