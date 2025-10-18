@@ -9,32 +9,25 @@ class EnderecoRequest extends FormRequest
 {
     protected $rule;
 
-    public function __construct(UsuarioRule $rule) {
+    public function __construct(UsuarioRule $rule)
+    {
         $this->rule = $rule;
     }
 
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         $isProprietario = $this->rule->isProprietario();
-
         return $isProprietario;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
             'cep' => 'required|string|min:9|max:9',
             'logradouro' => 'required|string',
             'complemento' => 'required|string',
-            'bairro' => 'required|string'
+            'bairro' => 'required|string',
+            'cidade_id' => 'required|exists:cidades,id'
         ];
     }
 
