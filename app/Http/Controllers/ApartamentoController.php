@@ -16,19 +16,14 @@ class ApartamentoController extends Controller
         $this->service = $service;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create(ApartamentoRequest $request)
     {
+        $request['proprietario_id'] = auth()->id();
         $apartamento = $this->service->create($request);
 
         if($apartamento == true){
@@ -38,9 +33,6 @@ class ApartamentoController extends Controller
         }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function list()
     {
         $apartamento = $this->service->list();
@@ -48,17 +40,11 @@ class ApartamentoController extends Controller
         return ['status' => true, 'message' => Geral::APARTAMENTO_ENCONTRADO, 'apartamento' => $apartamento];
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
         //
@@ -71,9 +57,6 @@ class ApartamentoController extends Controller
         return ['status' => true, 'message' => Geral::APARTAMENTO_ATUALIZADO, "apartamento" => $apartamento];
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         //
